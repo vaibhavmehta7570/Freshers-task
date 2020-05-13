@@ -9,13 +9,13 @@ import "../assets/styles/Cards.css";
 import { Link } from 'react-router-dom';
 const useStyles = makeStyles({
   root: {
-    // minWidth: 500,
     justifyContent: 'center',
     borderRadius: '15px',
-    
-  '&:hover': {
-    background:'#dfe6e9',
-  }},
+
+    '&:hover': {
+      background: '#dfe6e9',
+    }
+  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -32,7 +32,6 @@ const useStyles = makeStyles({
 function Cards(props) {
   const classes = useStyles();
   return (
-    <div>
     <Card border={2} borderColor="text.primary" className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -45,13 +44,12 @@ function Cards(props) {
           {props.body}
         </Typography>
       </CardContent>
-      <CardActions style={{justifyContent: 'center'}}>
-      <Button variant="contained" color="primary" to={`/${props.id}`} component={Link}>
-                    Explore More
+      <CardActions style={{ justifyContent: 'center' }}>
+        <Button variant="contained" color="primary" to={`/${props.id}`} component={Link}>
+          Explore More
         </Button>
       </CardActions>
     </Card>
-  </div>
   );
 };
 export default Cards;

@@ -1,6 +1,10 @@
-.all-users{
-    display:flex;
-    flex-wrap: wrap;
-    padding-left: 30px;
-    padding-top:10px;
+.all-users {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.users {
+  padding-top: 30px;
 }

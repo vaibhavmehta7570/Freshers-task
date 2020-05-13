@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     minWidth: 275,
     borderRadius: '15px',
     '&:hover': {
-        background: '#dfe6e9',
+      background: '#dfe6e9',
     }
   },
   bullet: {
@@ -24,9 +24,9 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-  subHeading:{
-      marginLeft:"40px",
-      textAlign:"left",
+  subHeading: {
+    marginLeft: "40px",
+    textAlign: "left",
   }
 });
 
@@ -36,7 +36,7 @@ export default function IndividualUser(props) {
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-            UserId:{props.id}
+          UserId:{props.id}
         </Typography>
         <Typography variant="h5" component="h2">
           {props.name}
@@ -44,12 +44,12 @@ export default function IndividualUser(props) {
         <Typography className={classes.pos} color="textSecondary">
           UserName:{props.username}
         </Typography>
-        <Typography variant="body2" component="p"  className={classes.subHeading}>
-          Email:{props.email}<br/>
-          Address:{props.address}<br/>
-          phone:{props.phone}<br/>
-          company:{props.company}<br/>
-          website{props.website}<br/>
+        <Typography variant="body2" component="p" className={classes.subHeading}>
+          Email:{props.email}<br />
+          Address:{props.address}<br />
+          phone:{props.phone}<br />
+          company:{props.company}<br />
+          website{props.website}<br />
         </Typography>
       </CardContent>
     </Card>

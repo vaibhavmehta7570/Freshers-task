@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,11 +19,14 @@ export default function Navbar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-        <Button color='inherit' to="/" component={Link}>
+          <Button color='inherit' to="/" component={Link}>
             Home
         </Button>
-        <Button color='inherit' to="/users" component={Link}>
+          <Button color='inherit' to="/users" component={Link}>
             Users
+        </Button>
+          <Button color='inherit' to="/albums" component={Link}>
+            Albums
         </Button>
         </Toolbar>
       </AppBar>
