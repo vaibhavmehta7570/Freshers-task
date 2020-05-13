@@ -1,0 +1,6 @@
+.all-users{
+    display:flex;
+    flex-wrap: wrap;
+    padding-left: 30px;
+    padding-top:10px;
+}
