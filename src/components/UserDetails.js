@@ -1,23 +1,26 @@
 import React, { Component } from "react";
 import IndividualUser from "./IndividualUser";
 import "../assets/styles/UserDetails.css";
-class Home extends Component {
+import { fetchUserDetails } from "../redux";
+import { connect } from "react-redux";
+class UserDetails extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            userInfo: [],
+            // userInfo: [],
             isLoaded: false,
             error: false
         }
     }
     componentDidMount() {
         fetch(`https://jsonplaceholder.typicode.com/users/${this.props.match.params.id}`)
-            .then(res => res.json())
-            .then(json => {
+            .then(data => data.json())
+            .then(data => {
+                this.props.fetchUserDetails(data);
                 this.setState({
                     isLoaded: true,
-                    userInfo: json
                 })
+
             })
             .catch(err => {
                 console.error(err);
@@ -27,7 +30,7 @@ class Home extends Component {
             })
     }
     render() {
-        var { isLoaded, userInfo, error } = this.state;
+        var { isLoaded, error } = this.state;
         if (!isLoaded && error) {
             return (<div> Something went wrong</div>);
         }
@@ -39,15 +42,15 @@ class Home extends Component {
                 <div className="single-user">
                     <div className="users mb-3">
                         <IndividualUser
-                            key={userInfo.id}
-                            id={userInfo.id}
-                            name={userInfo.name}
-                            username={userInfo.username}
-                            email={userInfo.email}
-                            address={userInfo.address.city}
-                            company={userInfo.company.name}
-                            phone={userInfo.phone}
-                            website={userInfo.website}
+                            key={this.props.userInfo.id}
+                            id={this.props.userInfo.id}
+                            name={this.props.userInfo.name}
+                            username={this.props.userInfo.username}
+                            email={this.props.userInfo.email}
+                            address={this.props.userInfo.address.city}
+                            company={this.props.userInfo.company.name}
+                            phone={this.props.userInfo.phone}
+                            website={this.props.userInfo.website}
                         />
                     </div>
                 </div>
@@ -55,4 +58,14 @@ class Home extends Component {
         }
     }
 }
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.userInformation,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchUserDetails: (data) => dispatch(fetchUserDetails(data))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);

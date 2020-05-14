@@ -1,22 +1,25 @@
 import React, { Component } from "react";
 import Cards from "./Cards";
 import "../assets/styles/Home.css";
+import { getPosts } from "../redux";
+import { connect } from "react-redux";
 class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            posts: [],
+            // posts: [],
             isLoaded: false
         }
     }
     componentDidMount() {
         fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(res => res.json())
-            .then(json => {
+            .then(data => data.json())
+            .then(data => {
+                console.log(data);
                 this.setState({
                     isLoaded: true,
-                    posts: json
                 })
+                this.props.getPosts(data);
             })
             .catch(err => {
                 console.error(err);
@@ -26,8 +29,8 @@ class Home extends Component {
             })
     }
     render() {
-        var { isLoaded, posts, error } = this.state;
-        var allPosts = posts.map(post => {
+        var { isLoaded, error } = this.state;
+        var allPosts = this.props.posts.map(post => {
             return (
                 <div className="cards mb-3">
                     <Cards
@@ -55,4 +58,14 @@ class Home extends Component {
         }
     }
 }
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        posts: state.post,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getPosts: (data) => dispatch(getPosts(data))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

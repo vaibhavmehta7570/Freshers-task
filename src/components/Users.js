@@ -1,23 +1,26 @@
 import React, { Component } from "react";
 import UserCard from "./UserCard";
 import "../assets/styles/Users.css";
-class Home extends Component {
+import { getUsers } from "../redux";
+import { connect } from "react-redux";
+
+class Users extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            users: [],
+            // users: [],
             isLoaded: false,
             error: false
         }
     }
     componentDidMount() {
         fetch('https://jsonplaceholder.typicode.com/users')
-            .then(res => res.json())
-            .then(json => {
+            .then(data => data.json())
+            .then(data => {
                 this.setState({
                     isLoaded: true,
-                    users: json
                 })
+                this.props.getUsers(data);
             })
             .catch(err => {
                 console.error(err);
@@ -27,8 +30,8 @@ class Home extends Component {
             })
     }
     render() {
-        var { isLoaded, users, error } = this.state;
-        var allUsers = users.map(user => {
+        var { isLoaded, error } = this.state;
+        var allUsers = this.props.users.map(user => {
             return (
                 <div className="users mb-3">
                     <UserCard
@@ -55,4 +58,14 @@ class Home extends Component {
         }
     }
 }
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        users: state.user,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getUsers: (data) => dispatch(getUsers(data))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Users);
