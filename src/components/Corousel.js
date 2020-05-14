@@ -5,7 +5,8 @@ class Corousel extends Component {
         super(props)
         this.state = {
             images: [],
-            isLoaded: false
+            isLoaded: false,
+            error: false
         }
     }
     componentDidMount() {
@@ -16,14 +17,22 @@ class Corousel extends Component {
                     images: json,
                     isLoaded: true,
                 })
+            })
+            .catch(err => {
+                console.error(err);
+                this.setState({
+                    error: true
+                })
             });
     }
     render() {
-        var { isLoaded, images } = this.state;
-        console.log(images);
-        if (!isLoaded) {
-            return <div> Loading...</div>;
+        var { isLoaded, images, error } = this.state;
+        if (!isLoaded && error) {
+            return <div> Error!! Something went wrong </div>;
 
+        }
+        else if (!isLoaded) {
+            return <div>Loading... </div>
         }
         else {
             return (

@@ -17,8 +17,6 @@ class Slider extends Component {
                 <img className="corousel-img" src={image} alt="slide-img"></img>
             )
         })
-        console.log(sliderArr);
-
         return (
             <div className="slider">
                 {
