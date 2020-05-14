@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../assets/styles/Home.css";
+import Slider from "./Slider";
 class Corousel extends Component {
     constructor(props) {
         super(props)
@@ -21,29 +21,17 @@ class Corousel extends Component {
     render() {
         var { isLoaded, images } = this.state;
         console.log(images);
-        // var allPosts = posts.map(post => {
-        //     return (
-        //         <div className="cards mb-3">
-        //             <Cards
-        //                 key={post.id}
-        //                 title={post.title}
-        //                 id={post.id}
-        //                 body={post.body}
-        //                 user={post.userId}
-        //             />
-        //         </div>
-        //     );
-        // })
         if (!isLoaded) {
             return <div> Loading...</div>;
 
         }
         else {
             return (
-                <div className="all-posts">
-                    {/* {allPosts} */}
-                    loading is done
-                </div>
+                <React.Fragment>
+                    <Slider
+                        images={images}
+                    />
+                </React.Fragment>
             );
         }
     }
