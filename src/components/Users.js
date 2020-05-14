@@ -6,7 +6,8 @@ class Home extends Component {
         super(props)
         this.state = {
             users: [],
-            isLoaded: false
+            isLoaded: false,
+            error: false
         }
     }
     componentDidMount() {
@@ -17,10 +18,16 @@ class Home extends Component {
                     isLoaded: true,
                     users: json
                 })
-            });
+            })
+            .catch(err => {
+                console.error(err);
+                this.setState({
+                    error: true
+                })
+            })
     }
     render() {
-        var { isLoaded, users } = this.state;
+        var { isLoaded, users, error } = this.state;
         var allUsers = users.map(user => {
             return (
                 <div className="users mb-3">
@@ -33,7 +40,10 @@ class Home extends Component {
                 </div>
             );
         })
-        if (!isLoaded) {
+        if (!isLoaded && error) {
+            return (<div> Something went wrong </div>);
+        }
+        else if (!isLoaded) {
             return <div> Loading...</div>;
         }
         else {

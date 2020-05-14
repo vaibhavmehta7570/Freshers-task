@@ -6,7 +6,8 @@ class Home extends Component {
         super(props)
         this.state = {
             userInfo: [],
-            isLoaded: false
+            isLoaded: false,
+            error: false
         }
     }
     componentDidMount() {
@@ -17,11 +18,20 @@ class Home extends Component {
                     isLoaded: true,
                     userInfo: json
                 })
-            });
+            })
+            .catch(err => {
+                console.error(err);
+                this.setState({
+                    error: true
+                })
+            })
     }
     render() {
-        var { isLoaded, userInfo } = this.state;
-        if (!isLoaded) {
+        var { isLoaded, userInfo, error } = this.state;
+        if (!isLoaded && error) {
+            return (<div> Something went wrong</div>);
+        }
+        else if (!isLoaded) {
             return <div> Loading...</div>;
         }
         else {

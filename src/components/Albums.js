@@ -6,7 +6,8 @@ class Albums extends Component {
         super(props)
         this.state = {
             albums: [],
-            isLoaded: false
+            isLoaded: false,
+            error: false
         }
     }
     componentDidMount() {
@@ -18,10 +19,16 @@ class Albums extends Component {
                     albums: json,
                     isLoaded: true,
                 })
-            });
+            })
+            .catch(err => {
+                console.error(err);
+                this.setState({
+                    error: true
+                })
+            })
     }
     render() {
-        var { isLoaded, albums } = this.state;
+        var { isLoaded, albums, error } = this.state;
         var allAlbums = albums.map(album => {
             return (
                 <div className="albums mb-3">
@@ -34,7 +41,10 @@ class Albums extends Component {
                 </div>
             );
         })
-        if (!isLoaded) {
+        if (!isLoaded && error) {
+            return (<div> Something went wrong...</div>)
+        }
+        else if (!isLoaded) {
             return <div> Loading...</div>;
         }
         else {
