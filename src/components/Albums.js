@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import AlbumsCard from "./AlbumsCard";
 import "../assets/styles/Albums.css";
+import { fetchAlbums } from "../redux";
+import { connect } from "react-redux";
 class Albums extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            albums: [],
             isLoaded: false,
             error: false
         }
@@ -13,10 +14,9 @@ class Albums extends Component {
     componentDidMount() {
         fetch('https://jsonplaceholder.typicode.com/albums')
             .then(res => res.json())
-            .then(json => {
-                console.log(json);
+            .then(data => {
+                this.props.fetchAlbums(data);
                 this.setState({
-                    albums: json,
                     isLoaded: true,
                 })
             })
@@ -28,8 +28,8 @@ class Albums extends Component {
             })
     }
     render() {
-        var { isLoaded, albums, error } = this.state;
-        var allAlbums = albums.map(album => {
+        var { isLoaded, error } = this.state;
+        var allAlbums = this.props.albums.map(album => {
             return (
                 <div className="albums mb-3">
                     <AlbumsCard
@@ -56,4 +56,14 @@ class Albums extends Component {
         }
     }
 }
-export default Albums;
+const mapStateToProps = (state) => {
+    return {
+        albums: state.album,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchAlbums: (data) => dispatch(fetchAlbums(data))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Albums);

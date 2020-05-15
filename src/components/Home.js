@@ -7,15 +7,14 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // posts: [],
-            isLoaded: false
+            isLoaded: false,
+            error: false
         }
     }
     componentDidMount() {
         fetch('https://jsonplaceholder.typicode.com/posts')
             .then(data => data.json())
             .then(data => {
-                console.log(data);
                 this.setState({
                     isLoaded: true,
                 })

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import Slider from "./Slider";
+import { getImages } from "../redux";
+import { connect } from "react-redux";
 class Corousel extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            images: [],
             isLoaded: false,
             error: false
         }
@@ -12,11 +13,12 @@ class Corousel extends Component {
     componentDidMount() {
         fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${this.props.match.params.id}`)
             .then(res => res.json())
-            .then(json => {
+            .then(data => {
+                this.props.getImages(data)
                 this.setState({
-                    images: json,
                     isLoaded: true,
                 })
+
             })
             .catch(err => {
                 console.error(err);
@@ -26,7 +28,7 @@ class Corousel extends Component {
             });
     }
     render() {
-        var { isLoaded, images, error } = this.state;
+        var { isLoaded, error } = this.state;
         if (!isLoaded && error) {
             return <div> Error!! Something went wrong </div>;
 
@@ -38,11 +40,22 @@ class Corousel extends Component {
             return (
                 <React.Fragment>
                     <Slider
-                        images={images}
+
+                        images={this.props.images}
                     />
                 </React.Fragment>
             );
         }
     }
 }
-export default Corousel;
+const mapStateToProps = (state) => {
+    return {
+        images: state.image,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getImages: (data) => dispatch(getImages(data))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Corousel);
