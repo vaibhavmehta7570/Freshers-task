@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 function Cards(props) {
   const classes = useStyles();
   return (
-    <Card border={2} borderColor="text.primary" className={classes.root}>
+    <Card border={2} className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           UserId: {props.user}

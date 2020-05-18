@@ -1,1 +1,0 @@
-export const FETCH_POST_DETAILS = 'FETCH_POST_DETAILS';

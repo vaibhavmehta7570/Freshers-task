@@ -11,9 +11,9 @@ class Albums extends Component {
         const { loading, albums, error } = this.props
         var allAlbums = albums.map(album => {
             return (
-                <div className="albums mb-3">
+                <div className="albums mb-3" key={album.id}>
                     <AlbumsCard
-                        key={album.id}
+
                         title={album.title}
                         id={album.id}
                         userId={album.userId}

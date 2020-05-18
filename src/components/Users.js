@@ -12,9 +12,9 @@ class Users extends Component {
         const { loading, users, error } = this.props;
         var allUsers = users.map(user => {
             return (
-                <div className="users mb-3">
+                <div className="users mb-3" key={user.id}>
                     <UserCard
-                        key={user.id}
+
                         name={user.name}
                         user={user}
                         id={user.id}

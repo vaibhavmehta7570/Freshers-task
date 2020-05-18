@@ -10,7 +10,6 @@ class Corousel extends Component {
     }
     render() {
         const { loading, photos, error } = this.props
-        console.log(photos)
         return (
             loading === true ? <div>Loading...</div> : (error === '' ? <Slider images={photos} /> : <div>{error.message}</div>)
         )

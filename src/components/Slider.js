@@ -11,12 +11,9 @@ const s = {
 
 class Slider extends Component {
     render() {
-        const slides = [];
-        this.props.images.forEach(image => {
-            slides.push(image.url);
-        });
+        const slides = this.props.images.map((image, index) => image.url);
         return (
-            <div className={s.container}>
+            <div className={s.container} >
 
                 <div className={s.main}>
                     <Slideshow slides={slides} />

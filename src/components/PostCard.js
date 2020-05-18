@@ -34,7 +34,7 @@ export default function PostCard(props) {
   var allComments = props.comments.map(comment => {
 
     return (
-      <React.Fragment>
+      <React.Fragment key={comment.id}>
         <div className="comment-user-name">
           Username: {comment.name}
         </div>
@@ -48,7 +48,7 @@ export default function PostCard(props) {
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Username: {props.username}
+          UserId: {props.userId}
         </Typography>
         <Typography variant="h5" component="h2">
           {props.postTitle}

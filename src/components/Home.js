@@ -9,12 +9,11 @@ class Home extends Component {
     }
     render() {
         const { loading, posts, error } = this.props
-        console.log(posts)
         const allPosts = posts.map(post => {
             return (
-                <div className="cards mb-3">
+                <div className="cards mb-3" key={post.id}>
                     <Cards
-                        key={post.id}
+
                         title={post.title}
                         id={post.id}
                         body={post.body}
