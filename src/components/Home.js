@@ -1,35 +1,16 @@
 import React, { Component } from "react";
 import Cards from "./Cards";
 import "../assets/styles/Home.css";
-import { getPosts } from "../redux";
 import { connect } from "react-redux";
+import { fetchPosts } from "../redux/async-api/posts.js";
 class Home extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            isLoaded: false,
-            error: false
-        }
-    }
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(data => data.json())
-            .then(data => {
-                this.setState({
-                    isLoaded: true,
-                })
-                this.props.getPosts(data);
-            })
-            .catch(err => {
-                console.error(err);
-                this.setState({
-                    error: true
-                })
-            })
+        this.props.postsList()
     }
     render() {
-        var { isLoaded, error } = this.state;
-        var allPosts = this.props.posts.map(post => {
+        const { loading, posts, error } = this.props
+        console.log(posts)
+        const allPosts = posts.map(post => {
             return (
                 <div className="cards mb-3">
                     <Cards
@@ -42,29 +23,26 @@ class Home extends Component {
                 </div>
             );
         })
-        if (!isLoaded && error) {
-            return <div> Something went wrong...</div>
-        }
-        else if (!isLoaded) {
-            return <div> Loading...</div>;
-        }
-        else {
-            return (
+        return (
+            loading === true ? <div>Loading...</div> : (error !== '' ? <div>{error.message}</div> :
                 <div className="all-posts">
                     {allPosts}
-                </div>
-            );
-        }
+                </div>)
+        );
     }
 }
 const mapStateToProps = (state) => {
     return {
-        posts: state.post,
-    };
-};
+        loading: state.postReducer.loading,
+        posts: state.postReducer.posts,
+        error: state.postReducer.error
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        getPosts: (data) => dispatch(getPosts(data))
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+        postsList: () => dispatch(fetchPosts())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

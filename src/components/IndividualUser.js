@@ -42,14 +42,14 @@ export default function IndividualUser(props) {
           {props.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          UserName:{props.username}
+          UserName: {props.username}
         </Typography>
         <Typography variant="body2" component="p" className={classes.subHeading}>
-          Email:{props.email}<br />
-          Address:{props.address}<br />
-          phone:{props.phone}<br />
-          company:{props.company}<br />
-          website{props.website}<br />
+          Email: {props.email}<br />
+          Address: {props.address}<br />
+          phone: {props.phone}<br />
+          company: {props.company}<br />
+          website: {props.website}<br />
         </Typography>
       </CardContent>
     </Card>

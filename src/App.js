@@ -7,7 +7,7 @@ import UserDetails from "./components/UserDetails";
 import Post from "./components/Post";
 import Albums from "./components/Albums";
 import Corousel from "./components/Corousel";
-import store from "./redux/store";
+import store from "./redux/store/index";
 import {
   BrowserRouter as Router,
   Route, Switch

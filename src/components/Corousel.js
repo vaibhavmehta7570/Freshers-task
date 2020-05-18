@@ -1,62 +1,33 @@
 import React, { Component } from "react";
 import Slider from "./Slider";
 import "../assets/styles/Slider.css"
-import { getImages } from "../redux";
+import { fetchAlbumPhotos } from '../redux/async-api/albumPhotos.js'
 import { connect } from "react-redux";
 class Corousel extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            isLoaded: false,
-            error: false
-        }
-    }
     componentDidMount() {
-        fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${this.props.match.params.id}`)
-            .then(res => res.json())
-            .then(data => {
-                this.props.getImages(data)
-                this.setState({
-                    isLoaded: true,
-                })
-
-            })
-            .catch(err => {
-                console.error(err);
-                this.setState({
-                    error: true
-                })
-            });
+        const albumId = this.props.match.params.id
+        this.props.albumPhotos(albumId)
     }
     render() {
-        var { isLoaded, error } = this.state;
-        if (!isLoaded && error) {
-            return <div> Error!! Something went wrong </div>;
-
-        }
-        else if (!isLoaded) {
-            return <div>Loading... </div>
-        }
-        else {
-            return (
-                <React.Fragment>
-                    <Slider
-
-                        images={this.props.images}
-                    />
-                </React.Fragment>
-            );
-        }
+        const { loading, photos, error } = this.props
+        console.log(photos)
+        return (
+            loading === true ? <div>Loading...</div> : (error === '' ? <Slider images={photos} /> : <div>{error.message}</div>)
+        )
     }
 }
 const mapStateToProps = (state) => {
     return {
-        images: state.image,
-    };
-};
+        loading: state.albumPhotosReducer.loading,
+        photos: state.albumPhotosReducer.photos,
+        error: state.albumPhotosReducer.error
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        getImages: (data) => dispatch(getImages(data))
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Corousel);
+        albumPhotos: (albumId) => dispatch(fetchAlbumPhotos(albumId)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Corousel)

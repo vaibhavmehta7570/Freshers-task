@@ -1,35 +1,15 @@
 import React, { Component } from "react";
 import AlbumsCard from "./AlbumsCard";
 import "../assets/styles/Albums.css";
-import { fetchAlbums } from "../redux";
+import { fetchAlbums } from '../redux/async-api/albums.js'
 import { connect } from "react-redux";
 class Albums extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            isLoaded: false,
-            error: false
-        }
-    }
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/albums')
-            .then(res => res.json())
-            .then(data => {
-                this.props.fetchAlbums(data);
-                this.setState({
-                    isLoaded: true,
-                })
-            })
-            .catch(err => {
-                console.error(err);
-                this.setState({
-                    error: true
-                })
-            })
+        this.props.albumsList()
     }
     render() {
-        var { isLoaded, error } = this.state;
-        var allAlbums = this.props.albums.map(album => {
+        const { loading, albums, error } = this.props
+        var allAlbums = albums.map(album => {
             return (
                 <div className="albums mb-3">
                     <AlbumsCard
@@ -41,29 +21,23 @@ class Albums extends Component {
                 </div>
             );
         })
-        if (!isLoaded && error) {
-            return (<div> Something went wrong...</div>)
-        }
-        else if (!isLoaded) {
-            return <div> Loading...</div>;
-        }
-        else {
-            return (
-                <div className="all-albums">
-                    {allAlbums}
-                </div>
-            );
-        }
+        return loading === true ? <div>Loading...</div> : (error !== '' ? <div>Something went wrong</div> :
+            <div className="all-albums">{allAlbums}</div>)
     }
 }
+
 const mapStateToProps = (state) => {
     return {
-        albums: state.album,
-    };
-};
+        loading: state.albumsReducer.loading,
+        albums: state.albumsReducer.albums,
+        error: state.albumsReducer.error,
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchAlbums: (data) => dispatch(fetchAlbums(data))
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Albums);
+        albumsList: () => dispatch(fetchAlbums()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Albums)

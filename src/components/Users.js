@@ -1,37 +1,16 @@
 import React, { Component } from "react";
 import UserCard from "./UserCard";
 import "../assets/styles/Users.css";
-import { getUsers } from "../redux";
+import { fetchUsers } from '../redux/async-api/users.js';
 import { connect } from "react-redux";
 
 class Users extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            // users: [],
-            isLoaded: false,
-            error: false
-        }
-    }
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(data => data.json())
-            .then(data => {
-                this.setState({
-                    isLoaded: true,
-                })
-                this.props.getUsers(data);
-            })
-            .catch(err => {
-                console.error(err);
-                this.setState({
-                    error: true
-                })
-            })
+        this.props.usersList();
     }
     render() {
-        var { isLoaded, error } = this.state;
-        var allUsers = this.props.users.map(user => {
+        const { loading, users, error } = this.props;
+        var allUsers = users.map(user => {
             return (
                 <div className="users mb-3">
                     <UserCard
@@ -43,29 +22,27 @@ class Users extends Component {
                 </div>
             );
         })
-        if (!isLoaded && error) {
-            return (<div> Something went wrong </div>);
-        }
-        else if (!isLoaded) {
-            return <div> Loading...</div>;
-        }
-        else {
-            return (
-                <div className="all-users">
-                    {allUsers}
-                </div>
-            );
-        }
+        return loading === true ? (
+            <div>Loading...</div>
+        ) : error !== '' ? (
+            <div>{error.message}</div>
+        ) : (
+                    <div className="all-users">{allUsers}</div>
+                );
     }
 }
 const mapStateToProps = (state) => {
     return {
-        users: state.user,
+        loading: state.usersReducer.loading,
+        users: state.usersReducer.users,
+        error: state.usersReducer.error,
     };
 };
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        getUsers: (data) => dispatch(getUsers(data))
+        usersList: () => dispatch(fetchUsers()),
     };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Users);
