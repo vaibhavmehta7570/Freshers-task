@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Slider from "./Slider";
+import "../assets/styles/Slider.css"
 import { getImages } from "../redux";
 import { connect } from "react-redux";
 class Corousel extends Component {
