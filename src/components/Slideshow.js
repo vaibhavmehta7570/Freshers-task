@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Slide from "./Slide";
 import Dots from "./Dots";
-const s = {
+const style = {
     container: "fullW fullH rel overflowH",
     onScreen: "left0",
     offScreenRight: "left100vw",
@@ -14,12 +14,12 @@ class Slideshow extends Component {
         this.state = {
             slide1: {
                 id: 0,
-                position: s.onScreen,
+                position: style.onScreen,
                 transition: true
             },
             slide2: {
                 id: 1,
-                position: s.offScreenRight,
+                position: style.offScreenRight,
                 transition: true
             },
             currentId: 0
@@ -51,13 +51,13 @@ class Slideshow extends Component {
     transitionSlides = () => {
         const { slide1, slide2 } = this.state;
         let currentId;
-        if (slide1["position"] === s.onScreen) {
-            slide1["position"] = s.offScreenLeft;
-            slide2["position"] = s.onScreen;
+        if (slide1["position"] === style.onScreen) {
+            slide1["position"] = style.offScreenLeft;
+            slide2["position"] = style.onScreen;
             currentId = slide2.id;
         } else {
-            slide1["position"] = s.onScreen;
-            slide2["position"] = s.offScreenLeft;
+            slide1["position"] = style.onScreen;
+            slide2["position"] = style.offScreenLeft;
             currentId = slide1.id;
         }
         this.setSlideState(slide1, slide2, currentId);
@@ -69,13 +69,13 @@ class Slideshow extends Component {
     resetSlideOffScreen = () => {
         const { slide1, slide2, currentId } = this.state;
         const { slides } = this.props;
-        if (slide1["position"] === s.offScreenLeft) {
+        if (slide1["position"] === style.offScreenLeft) {
             slide1["transition"] = false;
-            slide1["position"] = s.offScreenRight;
+            slide1["position"] = style.offScreenRight;
             slide1["id"] = slide2.id + 1 === slides.length ? 0 : slide2.id + 1;
         } else {
             slide2["transition"] = false;
-            slide2["position"] = s.offScreenRight;
+            slide2["position"] = style.offScreenRight;
             slide2["id"] = slide1.id + 1 === slides.length ? 0 : slide1.id + 1;
         }
         this.setSlideState(slide1, slide2, currentId);
@@ -94,16 +94,16 @@ class Slideshow extends Component {
         const { slide1, slide2, currentId } = this.state;
         const { slides } = this.props;
         return (
-            <div className={s.container}>
+            <div className={style.container}>
                 <Slide
                     image={slides[slide1.id]}
                     position={slide1.position}
-                    transition={slide1.transition ? s.transition : ""}
+                    transition={slide1.transition ? style.transition : ""}
                 />
                 <Slide
                     image={slides[slide2.id]}
                     position={slide2.position}
-                    transition={slide2.transition ? s.transition : ""}
+                    transition={slide2.transition ? style.transition : ""}
                 />
                 <Dots slideId={currentId} slides={slides} />
             </div>

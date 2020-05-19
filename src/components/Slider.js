@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Slideshow from "./Slideshow";
 import "../assets/styles/Slider.css";
 
-const s = {
+const style = {
     container: "screenW screenH dGray col",
     header: "flex1 fCenter fSize2",
     main: "flex8 white",
@@ -13,9 +13,9 @@ class Slider extends Component {
     render() {
         const slides = this.props.images.map((image, index) => image.url);
         return (
-            <div className={s.container} >
+            <div className={style.container} >
 
-                <div className={s.main}>
+                <div clastylesName={style.main}>
                     <Slideshow slides={slides} />
                 </div>
 
