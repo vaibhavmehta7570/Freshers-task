@@ -19,13 +19,13 @@ export default function Navbar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Button color='inherit' to="/" component={Link}>
+          <Button data-test="home-button" color='inherit' to="/" component={Link}>
             Home
         </Button>
-          <Button color='inherit' to="/users" component={Link}>
+          <Button data-test="users-button" color='inherit' to="/users" component={Link}>
             Users
         </Button>
-          <Button color='inherit' to="/albums" component={Link}>
+          <Button data-test="albums-button" color='inherit' to="/albums" component={Link}>
             Albums
         </Button>
         </Toolbar>
