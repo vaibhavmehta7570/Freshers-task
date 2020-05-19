@@ -1,13 +1,13 @@
 
 import React, { memo } from "react";
-const s = {
+const style = {
     container: "abs fullW fullH",
     slideImage: "fullH fullW imgCover"
 };
 const Slide = ({ position, transition, image }) => {
     return (
-        <div className={s.container + " " + position + " " + transition}>
-            <img src={image} className={s.slideImage} alt="slide" />
+        <div className={style.container + " " + position + " " + transition}>
+            <img src={image} className={style.slideImage} alt="slide" />
         </div>
     );
 };
