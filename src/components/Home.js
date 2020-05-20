@@ -24,7 +24,7 @@ class Home extends Component {
         })
         return (
             loading === true ? <div>Loading...</div> : (error !== '' ? <div>{error.message}</div> :
-                <div className="all-posts">
+                <div data-test="home" className="all-posts">
                     {allPosts}
                 </div>)
         );

@@ -1,0 +1,23 @@
+
+import React from 'react';
+import { shallow } from 'enzyme';
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+import Slider from './Slider';
+
+const mockStore = configureMockStore();
+const store = mockStore({});
+
+let wrapped = shallow(
+    <Provider store={store}>
+        <Slider />
+    </Provider>
+)
+
+
+describe("Slider Component", () => {
+
+    it("Slider should render without throwing an error", () => {
+        expect(wrapped).toMatchSnapshot();
+    });
+});
