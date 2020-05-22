@@ -7,7 +7,7 @@ import {
 export const fetchUserInfo = (userId) => {
     return (dispatch) => {
         dispatch(fetchUserInfoRequest(userId))
-        fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+        return fetch(`https://jsonplaceholder.typicode.com/users/${userId || 1}`)
             .then(data => data.json())
             .then(data => {
                 dispatch(fetchUserInfoSuccess(data))

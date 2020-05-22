@@ -7,7 +7,7 @@ import {
 export const fetchAlbums = () => {
     return (dispatch) => {
         dispatch(fetchAlbumsRequest())
-        fetch('https://jsonplaceholder.typicode.com/albums')
+        return fetch('https://jsonplaceholder.typicode.com/albums')
             .then(res => res.json())
             .then(response => {
                 dispatch(fetchAlbumsSuccess(response))

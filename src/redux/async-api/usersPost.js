@@ -10,7 +10,7 @@ import {
 export const fetchUserPost = (postId) => {
     return (dispatch) => {
         dispatch(fetchUsersPostRequest())
-        fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+        return fetch(`https://jsonplaceholder.typicode.com/posts/${postId || 1}`)
             .then(data => data.json())
             .then(response => {
                 dispatch(fetchUsersPostSuccess(response))
@@ -24,7 +24,7 @@ export const fetchUserPost = (postId) => {
 export const fetchUserComment = (postId) => {
     return (dispatch) => {
         dispatch(fetchUsersCommentRequest())
-        fetch(`https://jsonplaceholder.typicode.com/comments`)
+        return fetch(`https://jsonplaceholder.typicode.com/comments`)
             .then(data => data.json())
             .then(response => {
                 dispatch(fetchUsersCommentSuccess(response))
